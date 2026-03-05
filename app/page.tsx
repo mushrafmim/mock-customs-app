@@ -221,7 +221,19 @@ export default function Home() {
                           <span className="text-green-600 font-medium">✓ Done</span>
                         )}
                         {task.status === 'failed' && (
-                          <span className="text-red-600 font-medium">✗ Failed</span>
+                          <button
+                            onClick={() => handleCompleteTask(task.task_id)}
+                            disabled={completingTaskId === task.task_id}
+                            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                              completingTaskId === task.task_id
+                                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                                : 'bg-red-600 text-white hover:bg-red-700'
+                            }`}
+                          >
+                            {completingTaskId === task.task_id
+                              ? 'Retrying...'
+                              : 'Retry'}
+                          </button>
                         )}
                       </td>
                     </tr>

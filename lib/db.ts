@@ -61,4 +61,10 @@ export const updateTaskStatus = db.prepare(`
   WHERE task_id = ?
 `);
 
+export const resetTaskToPending = db.prepare(`
+  UPDATE tasks
+  SET status = 'pending', completed_at = NULL
+  WHERE task_id = ?
+`);
+
 export default db;

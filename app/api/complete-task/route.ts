@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getTaskById, updateTaskStatus } from '@/lib/db';
+import { getTaskById, updateTaskStatus, resetTaskToPending } from '@/lib/db';
 
 export async function POST(request: NextRequest) {
   try {
@@ -23,11 +23,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (task.status !== 'pending') {
+    if (task.status === 'completed') {
       return NextResponse.json(
-        { error: `Task is already ${task.status}` },
+        { error: 'Task is already completed' },
         { status: 400 }
       );
+    }
+
+    if (task.status === 'failed') {
+      // Reset to pending to allow retry
+      resetTaskToPending.run(taskId);
     }
 
     // Call back to NSW backend to complete the task
@@ -38,7 +43,7 @@ export async function POST(request: NextRequest) {
       workflow_id: task.workflow_id,
       task_id: taskId,
       payload: {
-        action: 'complete',
+        action: 'COMPLETE',
       },
     };
 
