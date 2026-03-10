@@ -1,0 +1,26 @@
+# Dependencies
+node_modules
+
+# Build output
+.next
+
+# SQLite database files (mounted via volume in Docker)
+*.db
+*.db-shm
+*.db-wal
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Version control
+.git
+.gitignore
+
+# Documentation
+README.md
+TESTING_GUIDE.md
+
+# macOS
+.DS_Store
