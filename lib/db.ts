@@ -1,7 +1,7 @@
 import Database from 'better-sqlite3';
 import path from 'path';
 
-const dbPath = path.join(process.cwd(), 'customs.db');
+const dbPath = process.env.DB_PATH || path.join(process.cwd(), 'customs.db');
 const db = new Database(dbPath);
 
 // Enable WAL mode for better concurrency
